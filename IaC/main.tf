@@ -17,6 +17,20 @@ module "rds_module" {
     publicly_accessible     = true
 }
 
+module "parameter_store_module" {
+    source = "./parameter_store_module" 
+
+    parameter = {
+        "RDS_USERNAME" = module.rds_module.username
+        "RDS_PASSWORD" = module.rds_module.password
+        "RSD_HOST"     = module.rds_module.host
+        "RDS_PORT"     = "5432"
+        "RDS_DATABASE" = "users"
+    }
+
+}
+
+
 output "rds_host" {
     value = module.rds_module.host
 }
