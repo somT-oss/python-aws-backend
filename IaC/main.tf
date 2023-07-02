@@ -20,7 +20,7 @@ module "rds_module" {
 module "parameter_store_module" {
     source = "./parameter_store_module" 
 
-    parameter = {
+    parameters = {
         "RDS_USERNAME" = module.rds_module.username
         "RDS_PASSWORD" = module.rds_module.password
         "RSD_HOST"     = module.rds_module.host
