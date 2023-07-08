@@ -1,10 +1,28 @@
 import json
+import boto3
+import os
+from pprint import pprint
+from pymongo.mongo_client import MongoClient
+from pymongo.server_api import ServerApi
+
+
+
+def connect():
+    MONGO_USERNAME = os.getenv("MONGO_USERNAME")
+    MONGO_PASSWORD = os.getenv("MONGO_PASSWORD")
+    URI = f"mongodb+srv://{MONGO_USERNAME}:{MONGO_PASSWORD}@cluster0.azspf3u.mongodb.net/?retryWrites=true&w=majority"
+    client = None
+    try:
+        client = MongoClient(URI, server_api=ServerApi('1'))
+        return client
+    except Exception as e:
+        print(e)
+        return client
 
 
 def hello(event, context):
     body = {
-        "message": "You just hit the get endpoint",
-        "statusCode": 200,
+        "message": "Hello, Serverless!"
     }
 
     response = {
@@ -14,11 +32,3 @@ def hello(event, context):
 
     return response
 
-    # Use this code if you don't use the http event with the LAMBDA-PROXY
-    # integration
-    """
-    return {
-        "message": "Go Serverless v1.0! Your function executed successfully!",
-        "event": event
-    }
-    """
